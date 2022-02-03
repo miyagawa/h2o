@@ -87,6 +87,14 @@ RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/
 # komake
 RUN wget -O /usr/local/bin/komake https://raw.githubusercontent.com/kazuho/komake/main/komake && chmod +x /usr/local/bin/komake
 
+# mold
+RUN apt-get install --yes libstdc++-10-dev libxxhash-dev pkg-config
+RUN git clone https://github.com/rui314/mold.git && \
+        cd mold && \
+        git checkout v1.0.3 && \
+        make CXX=clang++ && \
+        make install
+
 # create user
 RUN useradd --create-home ci
 RUN echo 'ci ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
